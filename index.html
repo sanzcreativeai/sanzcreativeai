@@ -1,238 +1,92 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>Sanz Creative</title>
-
 <style>
-
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    scroll-behavior:smooth;
-    font-family:Arial,sans-serif;
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif;scroll-behavior:smooth}
+body{background:#08111f;color:#fff}
+nav{position:fixed;top:0;left:0;width:100%;display:flex;justify-content:space-between;align-items:center;padding:18px 70px;background:rgba(8,17,31,.95);backdrop-filter:blur(10px)}
+.logo img{height:70px}
+nav ul{display:flex;list-style:none;gap:35px}
+nav a{text-decoration:none;color:#fff;font-weight:bold}
+nav a:hover{color:#3b82f6}
+.hero{height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:20px}
+.hero h1{font-size:72px;max-width:1000px}
+.hero p{margin:25px 0;font-size:24px;color:#b9c3d5}
+.btn{background:#2563eb;color:#fff;padding:16px 42px;border-radius:50px;text-decoration:none;font-weight:bold}
+section{padding:90px 10%}
+h2{text-align:center;font-size:42px;margin-bottom:20px}
+.lead{text-align:center;color:#c8d0df;max-width:850px;margin:0 auto 50px;line-height:1.8}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:25px}
+.card{background:#172235;padding:30px;border-radius:18px;transition:.3s}
+.card:hover{transform:translateY(-8px);background:#2563eb}
+.card h3{margin-bottom:12px}
+.portfolio{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:25px}
+.work{background:#172235;height:220px;border-radius:18px;display:flex;align-items:center;justify-content:center;color:#9fb3d9}
+.contact{text-align:center}
+footer{padding:25px;text-align:center;background:#0b1525;color:#9fb3d9}
+@media(max-width:768px){
+nav{padding:15px 20px}
+nav ul{gap:15px;font-size:14px}
+.logo img{height:55px}
+.hero h1{font-size:42px}
+.hero p{font-size:18px}
 }
-
-body{
-    background:#08111f;
-    color:white;
-}
-
-/* Navigation */
-
-nav{
-    position:fixed;
-    top:0;
-    left:0;
-    width:100%;
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    padding:22px 80px;
-    background:rgba(8,17,31,.95);
-    backdrop-filter:blur(12px);
-    z-index:1000;
-}
-
-.logo img{
-    height:85px;
-    width:auto;
-}
-
-nav ul{
-    display:flex;
-    list-style:none;
-    gap:40px;
-}
-
-nav a{
-    text-decoration:none;
-    color:white;
-    font-size:17px;
-    font-weight:bold;
-    transition:.3s;
-}
-
-nav a:hover{
-    color:#3b82f6;
-}
-
-/* Hero */
-
-.hero{
-    height:100vh;
-    display:flex;
-    flex-direction:column;
-    justify-content:center;
-    align-items:center;
-    text-align:center;
-    padding:20px;
-}
-
-.hero h1{
-    font-size:70px;
-    margin-bottom:20px;
-}
-
-.hero p{
-    font-size:24px;
-    color:#b8c2d6;
-    margin-bottom:45px;
-}
-
-.btn{
-    background:#2563eb;
-    padding:18px 45px;
-    border-radius:50px;
-    text-decoration:none;
-    color:white;
-    font-size:20px;
-    font-weight:bold;
-    transition:.3s;
-}
-
-.btn:hover{
-    background:#1d4ed8;
-}
-
-/* ABOUT */
-
-#about{
-    padding:100px 10%;
-    background:#111827;
-    text-align:center;
-}
-
-#about h2{
-    font-size:48px;
-    margin-bottom:20px;
-}
-
-#about p{
-    font-size:20px;
-    color:#bfc7d5;
-    max-width:850px;
-    margin:0 auto 60px;
-    line-height:1.8;
-}
-
-.about-boxes{
-    display:flex;
-    gap:30px;
-    justify-content:center;
-    flex-wrap:wrap;
-}
-
-.box{
-    background:#1b2436;
-    padding:35px;
-    border-radius:20px;
-    width:320px;
-    transition:.4s;
-    border:1px solid rgba(255,255,255,.08);
-}
-
-.box:hover{
-    transform:translateY(-12px);
-    background:#2563eb;
-}
-
-.box h3{
-    font-size:28px;
-    margin-bottom:15px;
-}
-
-.box p{
-    font-size:17px !important;
-    margin:0 !important;
-    color:#d6d6d6 !important;
-}
-
 </style>
-
 </head>
-
 <body>
 
 <nav>
-
-<div class="logo">
-    <img src="sanz.png" alt="Sanz Creative Logo">
-</div>
-
+<div class="logo"><img src="sanz.png" alt="Sanz Creative"></div>
 <ul>
-    <li><a href="#">Home</a></li>
-    <li><a href="#about">About</a></li>
-    <li><a href="#services">Services</a></li>
-    <li><a href="#portfolio">Portfolio</a></li>
-    <li><a href="#contact">Contact</a></li>
+<li><a href="#home">Home</a></li>
+<li><a href="#about">About</a></li>
+<li><a href="#services">Services</a></li>
+<li><a href="#portfolio">Portfolio</a></li>
+<li><a href="#contact">Contact</a></li>
 </ul>
-
 </nav>
 
-<section class="hero">
-
+<section class="hero" id="home">
 <h1>Grow Your Brand With Creativity</h1>
-
-<p>
-Digital Marketing • AI Design • Video Editing • Branding
-</p>
-
-<a class="btn" href="#portfolio">
-View Portfolio
-</a>
-
+<p>Digital Marketing • AI Design • Video Editing • Branding</p>
+<a class="btn" href="#portfolio">View Portfolio</a>
 </section>
 
 <section id="about">
-
 <h2>About Sanz Creative</h2>
-
-<p>
-Sanz Creative helps businesses grow through Digital Marketing, AI Design, Video Editing, Branding and Website Development.
-</p>
-
-<div class="about-boxes">
-
-<div class="box">
-<h3>Digital Marketing</h3>
-<p>Meta Ads, Google Ads, SEO & Social Media Marketing.</p>
-</div>
-
-<div class="box">
-<h3>AI Design</h3>
-<p>AI Posters, Branding, Creative Graphics & Visual Content.</p>
-</div>
-
-<div class="box">
-<h3>Video Editing</h3>
-<p>Reels, YouTube Videos, Commercial Ads & Motion Graphics.</p>
-</div>
-
-</div>
-
+<p class="lead">Sanz Creative is a creative digital agency helping businesses build a stronger online presence through digital marketing, AI-powered design, branding, social media management, and professional video editing.</p>
 </section>
 
-<!-- Placeholder Sections -->
-
-<section id="services" style="padding:120px 10%; text-align:center;">
-<h2>Services</h2>
-<p>Coming Soon...</p>
+<section id="services">
+<h2>Our Services</h2>
+<div class="grid">
+<div class="card"><h3>Digital Marketing</h3><p>Meta Ads, Google Ads, SEO and Social Media Marketing.</p></div>
+<div class="card"><h3>AI Design</h3><p>AI Posters, Branding, Creative Graphics and Visual Content.</p></div>
+<div class="card"><h3>Video Editing</h3><p>Reels, YouTube Videos, Commercial Ads and Motion Graphics.</p></div>
+</div>
 </section>
 
-<section id="portfolio" style="padding:120px 10%; text-align:center; background:#111827;">
+<section id="portfolio">
 <h2>Portfolio</h2>
-<p>Coming Soon...</p>
+<div class="portfolio">
+<div class="work">Project 1</div>
+<div class="work">Project 2</div>
+<div class="work">Project 3</div>
+</div>
 </section>
 
-<section id="contact" style="padding:120px 10%; text-align:center;">
-<h2>Contact</h2>
-<p>Email: sanzcreative.ai@gmail.com</p>
+<section id="contact" class="contact">
+<h2>Let's Work Together</h2>
+<p class="lead">Email: your@email.com<br>Instagram: @sanzcreative.ai</p>
+<a class="btn" href="https://instagram.com/sanzcreative.ai">Visit Instagram</a>
 </section>
+
+<footer>
+© 2026 Sanz Creative. All Rights Reserved.
+</footer>
 
 </body>
 </html>
