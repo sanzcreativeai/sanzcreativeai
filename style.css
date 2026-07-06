@@ -1,18 +1,262 @@
-*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
-body{background:linear-gradient(135deg,#06101f,#10284f,#071521);color:#fff;overflow-x:hidden}
-.bg-logo{position:fixed;inset:0;background:url('sanz.png') center/45% no-repeat;opacity:.05;pointer-events:none;z-index:-1}
-header{position:fixed;top:0;width:100%;display:flex;justify-content:space-between;align-items:center;padding:18px 8%;background:rgba(6,16,31,.85);backdrop-filter:blur(12px)}
-.logo img{height:70px}
-nav a{color:#fff;text-decoration:none;margin-left:22px;font-weight:bold}
-.hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:120px 20px}
-.hero h1{font-size:64px;max-width:900px}.hero p{margin:20px 0;color:#c8d0df;font-size:22px}
-.btn{display:inline-block;background:#2563eb;color:#fff;padding:16px 36px;border-radius:40px;text-decoration:none}
-section{padding:90px 8%}
-h2{text-align:center;font-size:42px;margin-bottom:20px}
-.lead{text-align:center;max-width:800px;margin:0 auto;color:#c8d0df}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:24px;margin-top:40px}
-.card,.placeholder{background:rgba(255,255,255,.08);backdrop-filter:blur(14px);padding:28px;border-radius:20px;border:1px solid rgba(255,255,255,.08);transition:.3s}
-.card:hover,.placeholder:hover{transform:translateY(-8px);background:#2563eb}
-#contact{text-align:center}
-footer{text-align:center;padding:30px;background:#08111f;color:#aab}
-@media(max-width:768px){header{flex-direction:column}.hero h1{font-size:40px}.logo img{height:55px}nav{margin-top:10px}}
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial,sans-serif;
+scroll-behavior:smooth;
+}
+
+body{
+background:linear-gradient(135deg,#06101f,#10284f,#071521);
+color:#fff;
+overflow-x:hidden;
+}
+
+/* Background Logo */
+
+.bg-logo{
+position:fixed;
+inset:0;
+background:url('sanz.png') center/45% no-repeat;
+opacity:.05;
+pointer-events:none;
+z-index:-1;
+}
+
+/* Header */
+
+header{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:18px 8%;
+background:rgba(6,16,31,.85);
+backdrop-filter:blur(12px);
+z-index:1000;
+}
+
+.logo img{
+height:70px;
+}
+
+nav a{
+color:#fff;
+text-decoration:none;
+margin-left:22px;
+font-weight:bold;
+transition:.3s;
+}
+
+nav a:hover{
+color:#4ea3ff;
+}
+
+/* Hero */
+
+.hero{
+min-height:100vh;
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+text-align:center;
+padding:120px 20px;
+}
+
+.hero h1{
+font-size:64px;
+max-width:900px;
+margin-bottom:20px;
+}
+
+.hero p{
+margin-bottom:35px;
+color:#c8d0df;
+font-size:22px;
+}
+
+.btn{
+display:inline-block;
+background:#2563eb;
+color:#fff;
+padding:16px 36px;
+border-radius:40px;
+text-decoration:none;
+font-weight:bold;
+transition:.3s;
+}
+
+.btn:hover{
+background:#1d4ed8;
+transform:translateY(-3px);
+}
+
+/* Sections */
+
+section{
+padding:90px 8%;
+}
+
+h2{
+text-align:center;
+font-size:42px;
+margin-bottom:20px;
+}
+
+.lead{
+text-align:center;
+max-width:850px;
+margin:0 auto 50px;
+color:#c8d0df;
+line-height:1.8;
+}
+
+/* Services */
+
+.grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+gap:24px;
+margin-top:40px;
+}
+
+.card{
+background:rgba(255,255,255,.08);
+backdrop-filter:blur(14px);
+padding:28px;
+border-radius:20px;
+border:1px solid rgba(255,255,255,.08);
+transition:.3s;
+}
+
+.card:hover{
+transform:translateY(-8px);
+background:#2563eb;
+}
+
+.card h3{
+margin-bottom:12px;
+}
+
+.card p{
+color:#d8e2f0;
+line-height:1.7;
+}
+
+/* ================= PORTFOLIO ================= */
+
+.portfolio{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
+gap:30px;
+margin-top:50px;
+}
+
+.work{
+position:relative;
+overflow:hidden;
+border-radius:20px;
+background:#162236;
+height:260px;
+cursor:pointer;
+}
+
+.work img{
+width:100%;
+height:100%;
+object-fit:cover;
+display:block;
+transition:.5s;
+}
+
+.overlay{
+position:absolute;
+left:0;
+bottom:0;
+width:100%;
+padding:25px;
+background:linear-gradient(transparent,rgba(0,0,0,.92));
+color:#fff;
+transform:translateY(100%);
+transition:.4s;
+}
+
+.overlay h3{
+margin-bottom:10px;
+font-size:24px;
+}
+
+.overlay p{
+font-size:16px;
+color:#ddd;
+}
+
+.work:hover img{
+transform:scale(1.1);
+}
+
+.work:hover .overlay{
+transform:translateY(0);
+}
+
+/* Contact */
+
+#contact{
+text-align:center;
+}
+
+#contact p{
+margin:18px 0;
+font-size:18px;
+line-height:1.8;
+}
+
+/* Footer */
+
+footer{
+text-align:center;
+padding:30px;
+background:#08111f;
+color:#aab;
+margin-top:50px;
+}
+
+/* Responsive */
+
+@media(max-width:768px){
+
+header{
+flex-direction:column;
+padding:15px;
+}
+
+nav{
+margin-top:12px;
+}
+
+nav a{
+margin:0 8px;
+font-size:14px;
+}
+
+.logo img{
+height:55px;
+}
+
+.hero h1{
+font-size:40px;
+}
+
+.hero p{
+font-size:18px;
+}
+
+.portfolio{
+grid-template-columns:1fr;
+}
+
+}
