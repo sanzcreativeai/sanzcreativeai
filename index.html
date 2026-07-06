@@ -4,97 +4,64 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Sanz Creative</title>
-<style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif;scroll-behavior:smooth}
-body{background:#08111f;color:#fff}
-header{position:fixed;top:0;width:100%;background:rgba(8,17,31,.9);backdrop-filter:blur(10px);padding:16px 8%;display:flex;justify-content:space-between;align-items:center;z-index:999}
-header img{height:64px}
-nav a{color:#fff;text-decoration:none;margin-left:24px;font-weight:700}
-nav a:hover{color:#46a3ff}
-.hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:120px 20px;background:linear-gradient(135deg,#08111f,#10284f)}
-.hero h1{font-size:60px;max-width:900px}
-.hero p{margin:20px 0;color:#cbd5e1;font-size:22px;max-width:800px}
-.btn{display:inline-block;background:#2563eb;color:#fff;padding:16px 36px;border-radius:40px;text-decoration:none;font-weight:bold}
-section{padding:90px 8%}
-h2{text-align:center;font-size:42px;margin-bottom:20px}
-.lead{text-align:center;color:#cbd5e1;max-width:900px;margin:0 auto 50px;line-height:1.8}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:25px}
-.card{background:#162236;padding:30px;border-radius:18px;transition:.3s}
-.card:hover{transform:translateY(-8px);background:#2563eb}
-.portfolio .item{height:220px;border-radius:18px;background:#162236;display:flex;align-items:center;justify-content:center;color:#9fb3d9}
-footer{text-align:center;padding:40px;background:#0b1525;color:#aab7cf}
-@media(max-width:768px){
-header{padding:15px 5%;flex-direction:column}
-nav{margin-top:10px}
-nav a{margin:0 8px;font-size:14px}
-.hero h1{font-size:40px}
-.hero p{font-size:18px}
-}
-</style>
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
 
+<div class="bg-logo"></div>
+
 <header>
-<img src="sanz.png" alt="Sanz Creative">
-<nav>
-<a href="#home">Home</a>
-<a href="#about">About</a>
-<a href="#services">Services</a>
-<a href="#portfolio">Portfolio</a>
-<a href="#contact">Contact</a>
-</nav>
+  <div class="logo"><img src="sanz.png" alt="Sanz Creative"></div>
+  <nav>
+    <a href="#home">Home</a>
+    <a href="#about">About</a>
+    <a href="#services">Services</a>
+    <a href="#portfolio">Portfolio</a>
+    <a href="#contact">Contact</a>
+  </nav>
 </header>
 
 <section id="home" class="hero">
-<h1>Grow Your Brand With Creativity</h1>
-<p>Digital Marketing • AI Design • Video Editing • Branding • Website Development</p>
-<a class="btn" href="#portfolio">View Portfolio</a>
+  <h1>Grow Your Brand With Creativity</h1>
+  <p>Digital Marketing • AI Design • Video Editing • Branding • Website Development</p>
+  <a class="btn" href="#portfolio">View Portfolio</a>
 </section>
 
 <section id="about">
 <h2>About Sanz Creative</h2>
-<p class="lead">Sanz Creative is a creative digital studio helping businesses grow through Digital Marketing, AI Design, Social Media Management, Video Editing, Branding and Website Development. We create professional visual content that builds trust and drives results.</p>
+<p class="lead">Sanz Creative helps businesses grow through creative digital marketing, AI design, social media management, branding and professional video editing.</p>
 </section>
 
 <section id="services">
-<h2>Our Services</h2>
+<h2>Services</h2>
 <div class="grid">
-<div class="card"><h3>📈 Digital Marketing</h3><p>Meta Ads, Google Ads, lead generation and strategy.</p></div>
-<div class="card"><h3>📱 Social Media Management</h3><p>Instagram, Facebook, YouTube planning and management.</p></div>
-<div class="card"><h3>🎨 AI Creative Design</h3><p>AI posters, branding, social creatives and promotional visuals.</p></div>
-<div class="card"><h3>🎬 Video Editing</h3><p>Reels, YouTube videos, ads and cinematic edits.</p></div>
-<div class="card"><h3>💻 Website Development</h3><p>Modern responsive websites for businesses.</p></div>
-<div class="card"><h3>🎯 Branding</h3><p>Logo, identity, brochures and marketing materials.</p></div>
+<div class="card"><h3>Digital Marketing</h3><p>Social media, Meta Ads & Google Ads.</p></div>
+<div class="card"><h3>AI Design</h3><p>Creative posters and marketing visuals.</p></div>
+<div class="card"><h3>Video Editing</h3><p>Reels, Shorts and promotional videos.</p></div>
+<div class="card"><h3>Branding</h3><p>Logos, creatives and identity.</p></div>
+<div class="card"><h3>Website Development</h3><p>Modern responsive websites.</p></div>
+<div class="card"><h3>Content Creation</h3><p>Creative campaigns for businesses.</p></div>
 </div>
 </section>
 
-<section id="portfolio" class="portfolio">
+<section id="portfolio">
 <h2>Portfolio</h2>
-<p class="lead">Replace these placeholders with your own posters, videos and client work.</p>
 <div class="grid">
-<div class="item">Project 1</div>
-<div class="item">Project 2</div>
-<div class="item">Project 3</div>
-<div class="item">Project 4</div>
-<div class="item">Project 5</div>
-<div class="item">Project 6</div>
+<div class="placeholder">Your Work 1</div>
+<div class="placeholder">Your Work 2</div>
+<div class="placeholder">Your Work 3</div>
 </div>
 </section>
 
 <section id="contact">
-<h2>Let's Build Your Brand Together</h2>
-<p class="lead">
-📧 Email: <strong>leosanthosh333555@gmail.com</strong><br><br>
-📷 Instagram: <strong>@sanzcreative.ai</strong>
-</p>
-<div style="text-align:center"><a class="btn" href="https://instagram.com/sanzcreative.ai">Visit Instagram</a></div>
+<h2>Contact</h2>
+<p>Email: <strong>leosanthosh333555@gmail.com</strong></p>
+<p>Instagram: <strong>@sanzcreative.ai</strong></p>
+<p>Location: <strong>Kolathur, Chennai</strong></p>
 </section>
 
-<footer>
-<h3>SANZ CREATIVE</h3>
-<p>Creative Digital Marketing & Design Studio</p>
-<p>© 2026 Sanz Creative. All Rights Reserved.</p>
-</footer>
+<footer>© 2026 Sanz Creative</footer>
 
+<script src="script.js"></script>
 </body>
 </html>
