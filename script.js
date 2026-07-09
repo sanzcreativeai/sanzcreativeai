@@ -1,19 +1,176 @@
-// ---------- Falling icons (generic: video, design, marketing, web) ----------
+// ---------- Animated counters (Results section) ----------
+const counters = document.querySelectorAll('.counter');
+const counterIO = new IntersectionObserver((entries) => {
+  entries.forEach((entry) => {
+    if (!entry.isIntersecting) return;
+    const el = entry.target;
+    const target = parseInt(el.dataset.target, 10);
+    const divide = parseInt(el.dataset.divide || '1', 10);
+    const suffix = el.dataset.suffix || '';
+    const duration = 1600;
+    const start = performance.now();
+
+    function tick(now) {
+      const progress = Math.min((now - start) / duration, 1);
+      const eased = 1 - Math.pow(1 - progress, 3);
+      const current = target * eased;
+      el.textContent = suffix
+        ? (current / divide).toFixed(1) + suffix
+        : Math.round(current).toLocaleString('en-IN');
+      if (progress < 1) requestAnimationFrame(tick);
+      else {
+        el.textContent = suffix ? (target / divide).toFixed(1) + suffix : target.toLocaleString('en-IN');
+      }
+    }
+    requestAnimationFrame(tick);
+    counterIO.unobserve(el);
+  });
+}, { threshold: 0.4 });
+counters.forEach((el) => counterIO.observe(el));
+
+// ---------- Live site carousel ----------
+const track = document.getElementById('carouselTrack');
+const dotsWrap = document.getElementById('carouselDots');
+const prevBtn = document.getElementById('carouselPrev');
+const nextBtn = document.getElementById('carouselNext');
+
+if (track && dotsWrap) {
+  const slides = track.querySelectorAll('.site-slide');
+  let current = 0;
+  let autoTimer;
+
+  slides.forEach((_, i) => {
+    const dot = document.createElement('button');
+    if (i === 0) dot.classList.add('active');
+    dot.setAttribute('aria-label', `Go to project ${i + 1}`);
+    dot.addEventListener('click', () => goTo(i));
+    dotsWrap.appendChild(dot);
+  });
+  const dots = dotsWrap.querySelectorAll('button');
+
+  function goTo(index) {
+    current = (index + slides.length) % slides.length;
+    track.style.transform = `translateX(-${current * 100}%)`;
+    dots.forEach((d, i) => d.classList.toggle('active', i === current));
+  }
+
+  function startAuto() {
+    autoTimer = setInterval(() => goTo(current + 1), 5000);
+  }
+  function stopAuto() {
+    clearInterval(autoTimer);
+  }
+
+  prevBtn?.addEventListener('click', () => { goTo(current - 1); stopAuto(); startAuto(); });
+  nextBtn?.addEventListener('click', () => { goTo(current + 1); stopAuto(); startAuto(); });
+
+  const carouselEl = document.getElementById('siteCarousel');
+  carouselEl?.addEventListener('mouseenter', stopAuto);
+  carouselEl?.addEventListener('mouseleave', startAuto);
+
+  track.style.transition = 'transform 0.6s cubic-bezier(.2,.8,.2,1)';
+  goTo(0);
+  startAuto();
+}
+
+// ---------- Lead form (Formspree) ----------
+const leadForm = document.getElementById('leadForm');
+const formStatus = document.getElementById('formStatus');
+if (leadForm) {
+  leadForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    if (leadForm._gotcha && leadForm._gotcha.checked) return; // spam bot caught
+
+    const endpoint = leadForm.action;
+    if (!endpoint || endpoint.includes('YOUR_FORMSPREE_ENDPOINT')) {
+      formStatus.textContent = 'Form not connected yet — add your Formspree endpoint.';
+      formStatus.className = 'form-status error';
+      return;
+    }
+
+    const submitBtn = leadForm.querySelector('.lead-submit');
+    const submitLabel = submitBtn.querySelector('span');
+    const originalLabel = submitLabel.textContent;
+    submitBtn.disabled = true;
+    submitLabel.textContent = 'Sending...';
+    formStatus.textContent = '';
+    formStatus.className = 'form-status';
+
+    try {
+      const res = await fetch(endpoint, {
+        method: 'POST',
+        headers: { Accept: 'application/json' },
+        body: new FormData(leadForm),
+      });
+
+      if (res.ok) {
+        formStatus.textContent = "Thanks — we'll get back to you the same day.";
+        formStatus.className = 'form-status success';
+        leadForm.reset();
+      } else {
+        const data = await res.json().catch(() => null);
+        const msg = data?.errors?.map((er) => er.message).join(', ');
+        formStatus.textContent = msg || 'Something went wrong. Please try again.';
+        formStatus.className = 'form-status error';
+      }
+    } catch (err) {
+      formStatus.textContent = 'Network error. Please try again.';
+      formStatus.className = 'form-status error';
+    } finally {
+      submitBtn.disabled = false;
+      submitLabel.textContent = originalLabel;
+    }
+  });
+}
+
+// ---------- Shared icon set (digital marketing themed) ----------
 const ICONS = [
-  // camera / video
-  `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="2" y="6" width="14" height="12" rx="2"/><path d="M16 10l6-3v10l-6-3"/></svg>`,
-  // play button
-  `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="M10 8l6 4-6 4V8z" fill="currentColor" stroke="none"/></svg>`,
-  // layers / design
-  `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 2l9 5-9 5-9-5 9-5z"/><path d="M3 12l9 5 9-5"/><path d="M3 17l9 5 9-5"/></svg>`,
+  // trending up / growth
+  `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 17l6-6 4 4 8-8"/><path d="M15 7h6v6"/></svg>`,
+  // target / ad targeting
+  `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.2" fill="currentColor" stroke="none"/></svg>`,
   // megaphone / marketing
   `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 10v4h4l6 4V6l-6 4H3z"/><path d="M17 9a4 4 0 010 6"/></svg>`,
+  // hashtag
+  `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M5 9h14M5 15h14M10 4L7 20M17 4l-3 16"/></svg>`,
+  // heart / engagement
+  `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 20s-7-4.4-9.5-8.8C.9 8 2.3 4.5 5.8 4a5 5 0 016.2 2.3A5 5 0 0118.2 4c3.5.5 4.9 4 3.3 7.2C19 15.6 12 20 12 20z"/></svg>`,
+  // chat bubble / comments
+  `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 5h16v11H8l-4 4V5z"/></svg>`,
+  // share arrow
+  `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 12v7a1 1 0 001 1h14a1 1 0 001-1v-7"/><path d="M16 6l-4-4-4 4M12 2v14"/></svg>`,
+  // play button / video
+  `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="M10 8l6 4-6 4V8z" fill="currentColor" stroke="none"/></svg>`,
   // globe / website
   `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.6 3.8 5.7 3.8 9s-1.3 6.4-3.8 9c-2.5-2.6-3.8-5.7-3.8-9s1.3-6.4 3.8-9z"/></svg>`,
+  // layers / design
+  `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 2l9 5-9 5-9-5 9-5z"/><path d="M3 12l9 5 9-5"/><path d="M3 17l9 5 9-5"/></svg>`,
   // pen / branding
   `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>`,
+  // camera
+  `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="2" y="6" width="14" height="12" rx="2"/><path d="M16 10l6-3v10l-6-3"/></svg>`,
 ];
 
+// ---------- Floating decorative icons (Tools + Results sections) ----------
+document.querySelectorAll('[data-float]').forEach((container) => {
+  const count = window.innerWidth < 700 ? 6 : 12;
+  for (let i = 0; i < count; i++) {
+    const el = document.createElement('div');
+    el.className = 'float-icon';
+    el.innerHTML = ICONS[Math.floor(Math.random() * ICONS.length)];
+    const size = 20 + Math.random() * 26;
+    el.style.left = Math.random() * 96 + '%';
+    el.style.top = Math.random() * 82 + '%';
+    el.style.width = size + 'px';
+    el.style.height = size + 'px';
+    el.style.animationDuration = 3.5 + Math.random() * 3 + 's';
+    el.style.animationDelay = (Math.random() * -5) + 's';
+    container.appendChild(el);
+  }
+});
+
+// ---------- Falling icons (generic: video, design, marketing, web) ----------
 const rainContainer = document.getElementById('iconRain');
 if (rainContainer) {
   const COUNT = window.innerWidth < 700 ? 10 : 20;
@@ -74,6 +231,25 @@ document.querySelectorAll('.magnetic').forEach((btn) => {
     if (label) label.style.transform = '';
   });
 });
+
+// ---------- Scroll parallax depth (floating layers drift at different speeds) ----------
+const parallaxLayers = document.querySelectorAll('[data-float], .icon-rain');
+let lastScrollY = window.scrollY;
+let ticking = false;
+function applyParallax() {
+  parallaxLayers.forEach((layer, i) => {
+    const speed = 0.06 + (i % 3) * 0.04;
+    layer.style.transform = `translateY(${lastScrollY * speed * -0.15}px)`;
+  });
+  ticking = false;
+}
+window.addEventListener('scroll', () => {
+  lastScrollY = window.scrollY;
+  if (!ticking) {
+    requestAnimationFrame(applyParallax);
+    ticking = true;
+  }
+}, { passive: true });
 
 // ---------- Cursor spotlight (hero glow follows mouse) ----------
 const spotlight = document.getElementById('spotlight');

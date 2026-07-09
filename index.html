@@ -13,13 +13,16 @@
 <body>
 
 <div class="grain"></div>
+<div class="mesh-grid"></div>
 <div class="spotlight" id="spotlight"></div>
 <div class="cursor-dot" id="cursorDot"></div>
 <div class="cursor-ring" id="cursorRing"></div>
 
 <header>
   <div class="logo">
-    <img src="sanz.png" alt="SanzCreative.ai logo" class="logo-mark">
+    <span class="logo-ring">
+      <img src="sanz.png" alt="SanzCreative.ai logo" class="logo-mark">
+    </span>
     <span class="logo-word">SanzCreative<span class="tld">.ai</span></span>
   </div>
   <nav>
@@ -27,6 +30,8 @@
     <a href="#about">About</a>
     <a href="#services">Services</a>
     <a href="#portfolio">Work</a>
+    <a href="#results">Results</a>
+    <a href="#pricing">Pricing</a>
     <a href="#contact">Contact</a>
   </nav>
   <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">
@@ -73,21 +78,30 @@
 </div>
 
 <!-- ABOUT -->
-<section id="about">
+<section id="about" class="has-blob" style="--b1:#ff4d6d;--b2:#7c3aed">
   <div class="about-grid">
     <p class="eyebrow" data-reveal>About</p>
     <h2 data-reveal>Small studio.<br>Big output.</h2>
-    <p class="lead" data-reveal>
-      SanzCreative.ai helps businesses grow through creative digital marketing,
-      AI design, social media management, branding, professional video editing
-      and website development — all under one roof, so your brand looks and
-      sounds like one voice everywhere it shows up.
-    </p>
+    <div class="about-copy">
+      <p class="lead" data-reveal>
+        SanzCreative.ai helps businesses grow through creative digital marketing,
+        AI design, social media management, branding, professional video editing
+        and website development — all under one roof, so your brand looks and
+        sounds like one voice everywhere it shows up.
+      </p>
+      <p class="lead" data-reveal>
+        Alongside freelance projects, I also work as a Digital Marketing &amp;
+        Social Media Manager for automotive dealership brands — running their
+        Instagram, YouTube, and ad campaigns day to day. That real-world,
+        results-driven experience is exactly what shows up in every account
+        I manage for SanzCreative.ai clients.
+      </p>
+    </div>
   </div>
 </section>
 
 <!-- SERVICES -->
-<section id="services">
+<section id="services" class="has-blob" style="--b1:#c6ff3d;--b2:#31d0ff">
   <p class="eyebrow center" data-reveal>What we do</p>
   <h2 class="center" data-reveal>Services</h2>
   <div class="grid">
@@ -124,10 +138,96 @@
   </div>
 </section>
 
+<!-- TOOLS / TECH STACK -->
+<section id="tools" class="has-blob" style="--b1:#a855f7;--b2:#22c55e">
+  <div class="icon-float" data-float aria-hidden="true"></div>
+  <p class="eyebrow center" data-reveal>How we work</p>
+  <h2 class="center" data-reveal>Our Toolkit</h2>
+  <div class="tools-grid">
+    <div class="tool-badge" data-reveal style="--c1:#ff4d6d;--c2:#ffb14d">
+      <div class="tool-avatar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3l1.9 5.6L19.5 10l-5.6 1.9L12 17.5l-1.9-5.6L4.5 10l5.6-1.9L12 3z"/></svg></div>
+      <span>Claude<em>Web Builds</em></span>
+    </div>
+    <div class="tool-badge" data-reveal style="--c1:#2dd4bf;--c2:#22c55e">
+      <div class="tool-avatar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 11.5a8.5 8.5 0 01-8.5 8.5H4l2-4a8.5 8.5 0 1115-4.5z"/></svg></div>
+      <span>GPT<em>Poster Prompts</em></span>
+    </div>
+    <div class="tool-badge" data-reveal style="--c1:#31d0ff;--c2:#001e36">
+      <div class="tool-avatar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2l9 5-9 5-9-5 9-5z"/><path d="M3 12l9 5 9-5"/><path d="M3 17l9 5 9-5"/></svg></div>
+      <span>Photoshop<em>Poster Design</em></span>
+    </div>
+    <div class="tool-badge" data-reveal style="--c1:#7c3aed;--c2:#1e1b4b">
+      <div class="tool-avatar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="6" width="14" height="12" rx="2"/><path d="M16 10l6-3v10l-6-3"/></svg></div>
+      <span>CapCut<em>Video Editing</em></span>
+    </div>
+    <div class="tool-badge" data-reveal style="--c1:#fbbf24;--c2:#ef4444">
+      <div class="tool-avatar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="4"/><path d="M12 2v4M12 18v4M4.9 4.9l2.8 2.8M16.3 16.3l2.8 2.8M2 12h4M18 12h4M4.9 19.1l2.8-2.8M16.3 7.7l2.8-2.8"/></svg></div>
+      <span>Google Ads</span>
+    </div>
+    <div class="tool-badge" data-reveal style="--c1:#c6ff3d;--c2:#0ea5e9">
+      <div class="tool-avatar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg></div>
+      <span>SEO</span>
+    </div>
+    <div class="tool-badge" data-reveal style="--c1:#ff4d4d;--c2:#8b0000">
+      <div class="tool-avatar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M10 8l6 4-6 4V8z" fill="currentColor" stroke="none"/></svg></div>
+      <span>YouTube<em>Promotion</em></span>
+    </div>
+    <div class="tool-badge" data-reveal style="--c1:#4d7cff;--c2:#a855f7">
+      <div class="tool-avatar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 10v4h4l6 4V6l-6 4H3z"/><path d="M17 9a4 4 0 010 6"/></svg></div>
+      <span>Meta Ads</span>
+    </div>
+    <div class="tool-badge" data-reveal style="--c1:#38bdf8;--c2:#6366f1">
+      <div class="tool-avatar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.6 3.8 5.7 3.8 9s-1.3 6.4-3.8 9c-2.5-2.6-3.8-5.7-3.8-9s1.3-6.4 3.8-9z"/></svg></div>
+      <span>Website<em>Portfolio</em></span>
+    </div>
+  </div>
+</section>
+
 <!-- PORTFOLIO -->
-<section id="portfolio">
+<section id="portfolio" class="has-blob" style="--b1:#ff4d6d;--b2:#38bdf8">
   <p class="eyebrow center" data-reveal>Recent work</p>
   <h2 class="center" data-reveal>Our Portfolio</h2>
+
+  <p class="eyebrow center" data-reveal style="margin-top:8px">Live website builds</p>
+  <div class="site-carousel" data-reveal id="siteCarousel">
+    <div class="carousel-track" id="carouselTrack">
+      <div class="site-slide">
+        <div class="browser-frame">
+          <div class="browser-bar"><span></span><span></span><span></span><em>vtkautomobiles2025-digi.github.io</em></div>
+          <div class="browser-body preview-a">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M3 13l2-5a2 2 0 012-1h10a2 2 0 012 1l2 5"/><rect x="2" y="13" width="20" height="5" rx="1.5"/><circle cx="7" cy="18" r="1.6"/><circle cx="17" cy="18" r="1.6"/></svg>
+            <h4>VTK Citroën</h4>
+            <p>Car Dealership Website</p>
+          </div>
+        </div>
+        <div class="site-info">
+          <h3>VTK Citroën — Car Dealership</h3>
+          <p>Model showcase, test-drive booking form, 3 showroom locations, WhatsApp integration.</p>
+          <a href="https://vtkautomobiles2025-digi.github.io/VTKCITROEN/" target="_blank" rel="noopener" class="site-link">View Live Site ↗</a>
+        </div>
+      </div>
+      <div class="site-slide">
+        <div class="browser-frame">
+          <div class="browser-bar"><span></span><span></span><span></span><em>sanzcreativeai.github.io</em></div>
+          <div class="browser-body preview-b">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M8 4l4 3 4-3 2 3-3 2v11H9V9L6 7l2-3z"/></svg>
+            <h4>Stitch &amp; Style</h4>
+            <p>Tailoring &amp; Embroidery Studio</p>
+          </div>
+        </div>
+        <div class="site-info">
+          <h3>SHA Garments — Stitch &amp; Style</h3>
+          <p>Aari &amp; embroidery studio site — gallery, services, WhatsApp &amp; call booking.</p>
+          <a href="https://sanzcreativeai.github.io/SHAGARMENTS_STITCHNSTYLE/" target="_blank" rel="noopener" class="site-link">View Live Site ↗</a>
+        </div>
+      </div>
+    </div>
+    <button class="carousel-nav prev" id="carouselPrev" aria-label="Previous project">‹</button>
+    <button class="carousel-nav next" id="carouselNext" aria-label="Next project">›</button>
+    <div class="carousel-dots" id="carouselDots"></div>
+  </div>
+
+  <p class="eyebrow center" data-reveal style="margin-top:56px">Design &amp; creative work</p>
   <div class="portfolio">
     <div class="work" data-reveal>
       <img src="images/work1.jpeg" alt="YouTube marketing project">
@@ -153,27 +253,142 @@
   </div>
 </section>
 
+<!-- RESULTS / ACHIEVEMENTS -->
+<section id="results" class="has-blob" style="--b1:#ffb14d;--b2:#4d7cff">
+  <div class="icon-float" data-float aria-hidden="true"></div>
+  <p class="eyebrow center" data-reveal>Real accounts, real growth</p>
+  <h2 class="center" data-reveal>Started From Zero</h2>
+  <p class="lead center" data-reveal>Every brand we manage was grown from 0 followers and 0 subscribers — no shortcuts, no bought numbers, just consistent work.</p>
+  <div class="achievements">
+    <div class="achieve" data-reveal>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 17l6-6 4 4 8-8"/><path d="M15 7h6v6"/></svg>
+      <p class="achieve-stat"><span class="counter" data-target="3304">0</span>+</p>
+      <p class="achieve-label">Instagram followers grown</p>
+    </div>
+    <div class="achieve" data-reveal>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="M10 8l6 4-6 4V8z" fill="currentColor" stroke="none"/></svg>
+      <p class="achieve-stat"><span class="counter" data-target="10700" data-suffix="K" data-divide="1000">0</span></p>
+      <p class="achieve-label">YouTube subscribers grown</p>
+    </div>
+    <div class="achieve" data-reveal>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>
+      <p class="achieve-stat"><span class="counter" data-target="900">0</span>+</p>
+      <p class="achieve-label">Posts &amp; videos delivered</p>
+    </div>
+    <div class="achieve" data-reveal>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 2l9 5-9 5-9-5 9-5z"/><path d="M3 12l9 5 9-5"/><path d="M3 17l9 5 9-5"/></svg>
+      <p class="achieve-stat"><span class="counter" data-target="3">0</span></p>
+      <p class="achieve-label">Brand accounts scaled from zero</p>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section id="pricing" class="has-blob" style="--b1:#4d7cff;--b2:#ff4d6d">
+  <p class="eyebrow center" data-reveal>Simple, upfront pricing</p>
+  <h2 class="center" data-reveal>Project Pricing</h2>
+  <p class="lead center" data-reveal>One-off project pricing, starting from ₹399 — no monthly lock-ins.</p>
+  <div class="pricing-grid">
+    <div class="price-card" data-reveal>
+      <div class="price-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 2l9 5-9 5-9-5 9-5z"/><path d="M3 12l9 5 9-5"/><path d="M3 17l9 5 9-5"/></svg></div>
+      <h3>Poster / Social Creative</h3>
+      <p class="price-amount">₹399</p>
+      <p class="price-note">per design</p>
+      <a href="#contact" class="price-cta">Order this →</a>
+    </div>
+    <div class="price-card featured" data-reveal>
+      <span class="price-tag">Most requested</span>
+      <div class="price-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="2" y="6" width="14" height="12" rx="2"/><path d="M16 10l6-3v10l-6-3"/></svg></div>
+      <h3>Instagram Reel Edit</h3>
+      <p class="price-amount">₹499</p>
+      <p class="price-note">per reel</p>
+      <a href="#contact" class="price-cta">Order this →</a>
+    </div>
+    <div class="price-card" data-reveal>
+      <div class="price-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M16.5 3.5a2.1 2.1 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg></div>
+      <h3>Logo Design</h3>
+      <p class="price-amount">₹599</p>
+      <p class="price-note">per logo</p>
+      <a href="#contact" class="price-cta">Order this →</a>
+    </div>
+    <div class="price-card" data-reveal>
+      <div class="price-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.6 3.8 5.7 3.8 9s-1.3 6.4-3.8 9c-2.5-2.6-3.8-5.7-3.8-9s1.3-6.4 3.8-9z"/></svg></div>
+      <h3>Website Development</h3>
+      <p class="price-amount">₹499<span>+</span></p>
+      <p class="price-note">custom quote for bigger builds</p>
+      <a href="#contact" class="price-cta">Order this →</a>
+    </div>
+  </div>
+  <p class="price-footnote" data-reveal>Prices are starting rates for one-off projects — final quote depends on scope. <a href="#contact">Get a custom quote →</a></p>
+</section>
+
 <!-- CONTACT -->
 <section id="contact">
   <div class="contact-grid">
-    <div>
-      <p class="eyebrow" data-reveal>Get in touch</p>
+    <div class="contact-side">
+      <p class="eyebrow" data-reveal>Start a project</p>
       <h2 data-reveal>Let's make<br>something.</h2>
-    </div>
-    <div class="contact-list" data-reveal>
-      <a class="contact-item" href="mailto:leosanthosh333555@gmail.com">
-        <span class="label">Email</span>
-        <span class="value">leosanthosh333555@gmail.com</span>
-      </a>
-      <a class="contact-item" href="https://instagram.com/sanzcreative.ai" target="_blank" rel="noopener">
-        <span class="label">Instagram</span>
-        <span class="value">@sanzcreative.ai</span>
-      </a>
-      <div class="contact-item">
-        <span class="label">Location</span>
-        <span class="value"> Kolathur,Chennai </span>
+      <p class="lead" data-reveal>Tell us what you need — we'll get back to you the same day.</p>
+      <div class="contact-list" data-reveal>
+        <a class="contact-item" href="mailto:leosanthosh333555@gmail.com">
+          <span class="label">Email</span>
+          <span class="value">leosanthosh333555@gmail.com</span>
+        </a>
+        <a class="contact-item" href="https://instagram.com/sanzcreative.ai" target="_blank" rel="noopener">
+          <span class="label">Instagram</span>
+          <span class="value">@sanzcreative.ai</span>
+        </a>
+        <div class="contact-item">
+          <span class="label">Location</span>
+          <span class="value">Kolathur, Chennai</span>
+        </div>
       </div>
     </div>
+
+    <form class="lead-form" id="leadForm" action="https://formspree.io/f/xdarrlwy" method="POST" data-reveal>
+      <input type="checkbox" name="_gotcha" class="botcheck" tabindex="-1" autocomplete="off">
+      <input type="hidden" name="_subject" value="New project enquiry — SanzCreative.ai website">
+
+      <div class="field">
+        <label for="lf-name">Name</label>
+        <input type="text" id="lf-name" name="name" placeholder="Your name" required>
+      </div>
+
+      <div class="field-row">
+        <div class="field">
+          <label for="lf-phone">Phone Number</label>
+          <input type="tel" id="lf-phone" name="phone" placeholder="Your number" required>
+        </div>
+        <div class="field">
+          <label for="lf-location">Location</label>
+          <input type="text" id="lf-location" name="location" placeholder="City / area" required>
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="lf-service">What do you need?</label>
+        <select id="lf-service" name="service" required>
+          <option value="" disabled selected>Select a service</option>
+          <option>Poster / Social Creative</option>
+          <option>Instagram Reel Edit</option>
+          <option>Logo Design</option>
+          <option>Website Development</option>
+          <option>Social Media Management</option>
+          <option>Not sure yet</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label for="lf-message">Tell us more (optional)</label>
+        <textarea id="lf-message" name="message" rows="3" placeholder="Any details about your project"></textarea>
+      </div>
+
+      <button type="submit" class="btn magnetic lead-submit">
+        <span>Start My Project</span>
+      </button>
+
+      <p class="form-status" id="formStatus" role="status" aria-live="polite"></p>
+    </form>
   </div>
 </section>
 
@@ -181,6 +396,17 @@
   <span>© 2026 SanzCreative.ai. All Rights Reserved.</span>
   <a href="#home" class="to-top">Back to top ↑</a>
 </footer>
+
+<div class="fab-stack">
+  <a href="https://instagram.com/sanzcreative.ai" target="_blank" rel="noopener" class="fab fab-insta">
+    <span class="fab-label">Instagram</span>
+    <span class="fab-glyph">@</span>
+  </a>
+  <a href="#contact" class="fab fab-contact">
+    <span class="fab-label">Contact</span>
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 5h16v11H8l-4 4V5z"/></svg>
+  </a>
+</div>
 
 <script src="script.js"></script>
 </body>
