@@ -28,50 +28,6 @@ const counterIO = new IntersectionObserver((entries) => {
 }, { threshold: 0.4 });
 counters.forEach((el) => counterIO.observe(el));
 
-// ---------- Live site carousel ----------
-const track = document.getElementById('carouselTrack');
-const dotsWrap = document.getElementById('carouselDots');
-const prevBtn = document.getElementById('carouselPrev');
-const nextBtn = document.getElementById('carouselNext');
-
-if (track && dotsWrap) {
-  const slides = track.querySelectorAll('.site-slide');
-  let current = 0;
-  let autoTimer;
-
-  slides.forEach((_, i) => {
-    const dot = document.createElement('button');
-    if (i === 0) dot.classList.add('active');
-    dot.setAttribute('aria-label', `Go to project ${i + 1}`);
-    dot.addEventListener('click', () => goTo(i));
-    dotsWrap.appendChild(dot);
-  });
-  const dots = dotsWrap.querySelectorAll('button');
-
-  function goTo(index) {
-    current = (index + slides.length) % slides.length;
-    track.style.transform = `translateX(-${current * 100}%)`;
-    dots.forEach((d, i) => d.classList.toggle('active', i === current));
-  }
-
-  function startAuto() {
-    autoTimer = setInterval(() => goTo(current + 1), 5000);
-  }
-  function stopAuto() {
-    clearInterval(autoTimer);
-  }
-
-  prevBtn?.addEventListener('click', () => { goTo(current - 1); stopAuto(); startAuto(); });
-  nextBtn?.addEventListener('click', () => { goTo(current + 1); stopAuto(); startAuto(); });
-
-  const carouselEl = document.getElementById('siteCarousel');
-  carouselEl?.addEventListener('mouseenter', stopAuto);
-  carouselEl?.addEventListener('mouseleave', startAuto);
-
-  track.style.transition = 'transform 0.6s cubic-bezier(.2,.8,.2,1)';
-  goTo(0);
-  startAuto();
-}
 
 // ---------- Lead form (Formspree) ----------
 const leadForm = document.getElementById('leadForm');
@@ -250,6 +206,57 @@ window.addEventListener('scroll', () => {
     ticking = true;
   }
 }, { passive: true });
+
+// ---------- Hero scene widget (cycling work illustrations) ----------
+const sceneWidget = document.getElementById('sceneWidget');
+if (sceneWidget) {
+  const scenes = sceneWidget.querySelectorAll('.scene');
+  const dots = sceneWidget.querySelectorAll('.scene-dot');
+  let sceneIndex = 0;
+  let sceneTimer;
+
+  function showScene(i) {
+    sceneIndex = i;
+    scenes.forEach((s, idx) => s.classList.toggle('active', idx === i));
+    dots.forEach((d, idx) => d.classList.toggle('active', idx === i));
+  }
+
+  function startSceneCycle() {
+    sceneTimer = setInterval(() => showScene((sceneIndex + 1) % scenes.length), 4200);
+  }
+
+  dots.forEach((dot, i) => {
+    dot.addEventListener('click', () => {
+      showScene(i);
+      clearInterval(sceneTimer);
+      startSceneCycle();
+    });
+  });
+
+  showScene(0);
+  startSceneCycle();
+}
+
+// ---------- Whole-page mouse-reactive ambient layer ----------
+const ambientBlobs = document.getElementById('ambientBlobs');
+if (ambientBlobs && matchMedia('(hover: hover)').matches) {
+  document.addEventListener('mousemove', (e) => {
+    const nx = (e.clientX / window.innerWidth - 0.5) * 2;
+    const ny = (e.clientY / window.innerHeight - 0.5) * 2;
+    ambientBlobs.style.transform = `translate(${nx * -26}px, ${ny * -22}px)`;
+  });
+}
+
+// ---------- Theme toggle ----------
+const themeToggle = document.getElementById('themeToggle');
+if (themeToggle) {
+  themeToggle.addEventListener('click', () => {
+    const current = document.documentElement.getAttribute('data-theme') || 'vivid';
+    const next = current === 'vivid' ? 'midnight' : 'vivid';
+    document.documentElement.setAttribute('data-theme', next);
+    localStorage.setItem('sanz-theme', next);
+  });
+}
 
 // ---------- Cursor spotlight (hero glow follows mouse) ----------
 const spotlight = document.getElementById('spotlight');
