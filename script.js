@@ -1,3 +1,77 @@
+// ============================================================
+// MOTION LIBRARY — premium entrance, scroll reveals, spring interactions
+// Loaded via CDN in index.html. Falls back gracefully if it fails to load.
+// ============================================================
+const hasMotion = typeof window.Motion !== 'undefined';
+
+if (!hasMotion) {
+  // Fallback: make sure content is visible even without the animation library
+  document.querySelectorAll('[data-hero-in], [data-stagger-item]').forEach((el) => {
+    el.style.opacity = '1';
+  });
+} else {
+  const { animate, inView, stagger } = window.Motion;
+  const EASE = [0.16, 1, 0.3, 1]; // smooth premium ease-out
+
+  // ---- Hero load-in stagger ----
+  const heroEls = document.querySelectorAll('[data-hero-in]');
+  if (heroEls.length) {
+    animate(
+      heroEls,
+      { opacity: [0, 1], y: [26, 0] },
+      { duration: 0.7, delay: stagger(0.12, { startDelay: 0.1 }), easing: EASE }
+    );
+  }
+
+  // ---- Staggered scroll reveals for card grids ----
+  const staggerGroups = new Map();
+  document.querySelectorAll('[data-stagger-item]').forEach((el) => {
+    const parent = el.parentElement;
+    if (!staggerGroups.has(parent)) staggerGroups.set(parent, []);
+    staggerGroups.get(parent).push(el);
+  });
+
+  staggerGroups.forEach((items, container) => {
+    inView(
+      container,
+      () => {
+        animate(
+          items,
+          { opacity: [0, 1], y: [24, 0], scale: [0.96, 1] },
+          { duration: 0.55, delay: stagger(0.08), easing: EASE }
+        );
+      },
+      { margin: '0px 0px -10% 0px' }
+    );
+  });
+
+  // ---- Spring hover / tap on safe interactive elements ----
+  // (skips anything with its own continuous CSS animation, like tool-badges & work-boxes)
+  const springSelector = '.price-cta, .site-link, .fab, .card, .price-card, .achieve, .work-icon';
+  document.querySelectorAll(springSelector).forEach((el) => {
+    const spring = { type: 'spring', stiffness: 320, damping: 20 };
+    el.addEventListener('mouseenter', () => animate(el, { scale: 1.045 }, spring));
+    el.addEventListener('mouseleave', () => animate(el, { scale: 1 }, spring));
+    el.addEventListener('mousedown', () => animate(el, { scale: 0.96 }, { type: 'spring', stiffness: 420, damping: 22 }));
+    el.addEventListener('mouseup', () => animate(el, { scale: 1.045 }, spring));
+  });
+
+  // ---- Theme toggle: rotate + scale spring ----
+  const themeToggleBtn = document.getElementById('themeToggle');
+  if (themeToggleBtn) {
+    const toggleSpring = { type: 'spring', stiffness: 260, damping: 16 };
+    themeToggleBtn.addEventListener('mouseenter', () => animate(themeToggleBtn, { scale: 1.08, rotate: 90 }, toggleSpring));
+    themeToggleBtn.addEventListener('mouseleave', () => animate(themeToggleBtn, { scale: 1, rotate: 0 }, toggleSpring));
+  }
+
+  // ---- Polished submit button press feedback ----
+  const submitBtn = document.querySelector('.lead-submit');
+  if (submitBtn) {
+    submitBtn.addEventListener('mousedown', () => animate(submitBtn, { scale: 0.97 }, { type: 'spring', stiffness: 420, damping: 22 }));
+    submitBtn.addEventListener('mouseup', () => animate(submitBtn, { scale: 1 }, { type: 'spring', stiffness: 320, damping: 20 }));
+  }
+}
+
 // ---------- Animated counters (Results section) ----------
 const counters = document.querySelectorAll('.counter');
 const counterIO = new IntersectionObserver((entries) => {

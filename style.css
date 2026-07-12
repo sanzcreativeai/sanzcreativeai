@@ -195,7 +195,6 @@ header {
 .theme-toggle:hover {
   border-color: var(--lime);
   color: var(--lime);
-  transform: rotate(90deg);
 }
 
 nav {
@@ -500,7 +499,6 @@ h2.center { text-align: center; margin-bottom: 64px; }
 
 .card:hover {
   background: var(--ink);
-  transform: translateY(-4px);
 }
 
 .card .num {
@@ -822,7 +820,6 @@ a.contact-item:hover {
 }
 
 .achieve:hover {
-  transform: translateY(-6px);
   border-color: var(--lime);
 }
 
@@ -1450,7 +1447,7 @@ a.contact-item:hover {
   letter-spacing: 0.05em;
   transition: border-color 0.3s ease, color 0.3s ease, transform 0.3s ease;
 }
-.site-link:hover { border-color: var(--lime); color: var(--lime); transform: translateY(-2px); }
+.site-link:hover { border-color: var(--lime); color: var(--lime); }
 
 .carousel-nav {
   position: absolute;
@@ -1515,7 +1512,6 @@ a.contact-item:hover {
 }
 
 .price-card:hover {
-  transform: translateY(-8px);
   border-color: var(--lime);
   box-shadow: 0 24px 48px -20px rgba(198,255,61,0.25);
 }
@@ -1632,7 +1628,6 @@ a.contact-item:hover {
   animation: fab-pulse 2.6s ease-in-out infinite;
 }
 
-.fab:hover { transform: scale(1.08); }
 
 .fab-insta {
   background: linear-gradient(135deg, #ff4d6d, #ffb14d, #a855f7);
@@ -1695,6 +1690,12 @@ footer {
 }
 
 .to-top:hover { color: var(--lime); }
+
+/* ---------- Motion-driven elements (Motion library handles the reveal; JS fallback in script.js ensures visibility if it fails to load) ---------- */
+[data-hero-in],
+[data-stagger-item] {
+  opacity: 0;
+}
 
 /* ---------- Scroll reveal ---------- */
 [data-reveal] {
