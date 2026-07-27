@@ -1,9 +1,23 @@
 /* ============================================
    SANZ CREATIVE — Kinetic Poster Design System
-   Theming: [data-theme="vivid"] (default) / [data-theme="midnight"] (alt)
+   Theming: [data-theme="navy"] (default) / "vivid" / "midnight" (cycle via toggle)
    ============================================ */
 
 :root,
+html[data-theme="navy"] {
+  --ink: #0a1428;
+  --ink-soft: #0f1d38;
+  --card: #142544;
+  --paper: #eef4ff;
+  --muted: #7d95bd;
+  --lime: #00e5c7;
+  --coral: #3d8bff;
+  --accent-3: #00b8ff;
+  --accent-4: #7c5cff;
+  --grad: linear-gradient(135deg, var(--coral), var(--lime));
+  --grad4: linear-gradient(115deg, #3d8bff, #00b8ff, #00e5c7, #7c5cff);
+}
+
 html[data-theme="vivid"] {
   --ink: #170e2e;
   --ink-soft: #22163f;
@@ -125,15 +139,21 @@ header {
   padding: 3px;
 }
 
-.logo-ring::before {
-  content: '';
+.logo-ring-svg {
   position: absolute;
   inset: 0;
-  border-radius: 50%;
-  background: conic-gradient(from 0deg, var(--coral), var(--lime), #4d7cff, var(--coral));
+  width: 100%;
+  height: 100%;
   animation: ring-spin 6s linear infinite;
-  filter: drop-shadow(0 0 8px rgba(198,255,61,0.35));
+  filter: drop-shadow(0 0 8px rgba(0,229,199,0.35));
 }
+
+#logoRingCircle {
+  stroke-dasharray: 147.65; /* 2 * PI * 23.5, matches the circle radius */
+  stroke-dashoffset: 147.65; /* starts fully hidden; drawn in via JS on load */
+}
+
+.logo:hover .logo-ring-svg { animation-duration: 1.5s; }
 
 .logo-ring::after {
   content: '';
@@ -141,10 +161,12 @@ header {
   inset: 3px;
   border-radius: 50%;
   background: var(--ink);
+  z-index: 0;
 }
 
 @keyframes ring-spin {
-  to { transform: rotate(360deg); }
+  from { transform: rotate(-90deg); }
+  to { transform: rotate(270deg); }
 }
 
 .logo-mark {
@@ -361,6 +383,13 @@ nav a:hover::after { width: 100%; }
 .hero h1 .line { display: block; }
 .hero h1 .accent { color: transparent; -webkit-background-clip: text; background-clip: text; background-image: var(--grad); }
 .hero h1 em { font-style: italic; }
+
+.draw-underline {
+  display: block;
+  width: 220px;
+  height: 14px;
+  margin-top: 4px;
+}
 
 .hero-copy {
   margin-top: 28px;

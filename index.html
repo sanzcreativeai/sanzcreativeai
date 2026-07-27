@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="vivid">
+<html lang="en" data-theme="navy">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -78,7 +78,7 @@
 <script>
   (function () {
     var saved = localStorage.getItem('sanz-theme');
-    if (saved === 'midnight' || saved === 'vivid') {
+    if (saved === 'navy' || saved === 'midnight' || saved === 'vivid') {
       document.documentElement.setAttribute('data-theme', saved);
     }
   })();
@@ -104,7 +104,17 @@
 
 <header>
   <div class="logo">
-    <span class="logo-ring">
+    <span class="logo-ring" id="logoRing">
+      <svg class="logo-ring-svg" viewBox="0 0 52 52" aria-hidden="true">
+        <defs>
+          <linearGradient id="logoRingGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="var(--coral)"/>
+            <stop offset="45%" stop-color="var(--accent-3)"/>
+            <stop offset="100%" stop-color="var(--lime)"/>
+          </linearGradient>
+        </defs>
+        <circle id="logoRingCircle" cx="26" cy="26" r="23.5" fill="none" stroke="url(#logoRingGrad)" stroke-width="3" stroke-linecap="round"/>
+      </svg>
       <img src="sanz.png" alt="SANZCREATIVE digital marketing and web design studio logo" class="logo-mark" width="44" height="44">
     </span>
     <span class="logo-word">SanzCreative<span class="tld">.ai</span></span>
@@ -138,6 +148,9 @@
       <span class="line">We build brands</span>
       <span class="line accent">that <em>move</em>.</span>
     </h1>
+    <svg class="draw-underline" id="heroUnderline" viewBox="0 0 260 16" aria-hidden="true">
+      <path d="M4 10 Q 60 2, 130 9 T 256 6" fill="none" stroke="url(#logoRingGrad)" stroke-width="4" stroke-linecap="round"/>
+    </svg>
     <p class="hero-copy" data-hero-in>
       Digital marketing, social media management, Google Ads, AI poster
       design, video editing, branding and website development — for
@@ -476,6 +489,10 @@
           <span class="label">Location</span>
           <span class="value">Kolathur, Chennai</span>
         </div>
+        <a class="contact-item" href="https://www.google.com/maps/search/?api=1&query=SanzCreative.ai+Kolathur+Chennai" target="_blank" rel="noopener">
+          <span class="label">Google Business</span>
+          <span class="value">Find us on Google →</span>
+        </a>
       </div>
     </div>
 

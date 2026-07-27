@@ -3,15 +3,74 @@
 // Loaded via CDN in index.html. Falls back gracefully if it fails to load.
 // ============================================================
 const hasMotion = typeof window.Motion !== 'undefined';
+const prefersReducedMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+// ---- Text scramble effect on the hero headline (pure vanilla JS, works with or without Motion) ----
+if (!prefersReducedMotion) {
+  const scrambleChars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+  document.querySelectorAll('.hero h1 .line').forEach((lineEl, lineIndex) => {
+    const finalHTML = lineEl.innerHTML;
+    const finalText = lineEl.textContent;
+    const chars = finalText.split('');
+    let frame = 0;
+    const totalFrames = 18;
+    const startDelay = 300 + lineIndex * 220;
+
+    setTimeout(() => {
+      const interval = setInterval(() => {
+        frame++;
+        const revealCount = Math.floor((frame / totalFrames) * chars.length);
+        lineEl.textContent = chars
+          .map((ch, i) => {
+            if (ch === ' ') return ' ';
+            if (i < revealCount) return ch;
+            return scrambleChars[Math.floor(Math.random() * scrambleChars.length)];
+          })
+          .join('');
+        if (frame >= totalFrames) {
+          clearInterval(interval);
+          lineEl.innerHTML = finalHTML; // restore original markup (e.g. the <em>move</em> tag)
+        }
+      }, 35);
+    }, startDelay);
+  });
+}
 
 if (!hasMotion) {
   // Fallback: make sure content is visible even without the animation library
   document.querySelectorAll('[data-hero-in], [data-stagger-item]').forEach((el) => {
     el.style.opacity = '1';
   });
+  const fallbackRing = document.getElementById('logoRingCircle');
+  if (fallbackRing) fallbackRing.style.strokeDashoffset = '0';
+  const fallbackUnderline = document.querySelector('#heroUnderline path');
+  if (fallbackUnderline) fallbackUnderline.style.strokeDashoffset = '0';
 } else {
-  const { animate, inView, stagger } = window.Motion;
+  const { animate, inView, stagger, scroll } = window.Motion;
   const EASE = [0.16, 1, 0.3, 1]; // smooth premium ease-out
+
+  // ---- Self-drawing logo ring (once, on page load) ----
+  const logoRingCircle = document.getElementById('logoRingCircle');
+  if (logoRingCircle) {
+    animate(
+      logoRingCircle,
+      { strokeDashoffset: [147.65, 0] },
+      { duration: 1.3, easing: EASE, delay: 0.15 }
+    );
+  }
+
+  // ---- Draw-in underline accent beneath hero headline ----
+  const heroUnderlinePath = document.querySelector('#heroUnderline path');
+  if (heroUnderlinePath) {
+    const len = heroUnderlinePath.getTotalLength();
+    heroUnderlinePath.style.strokeDasharray = len;
+    heroUnderlinePath.style.strokeDashoffset = len;
+    animate(
+      heroUnderlinePath,
+      { strokeDashoffset: [len, 0] },
+      { duration: 0.9, easing: EASE, delay: 0.9 }
+    );
+  }
 
   // ---- Hero load-in stagger ----
   const heroEls = document.querySelectorAll('[data-hero-in]');
@@ -44,6 +103,27 @@ if (!hasMotion) {
       { margin: '0px 0px -10% 0px' }
     );
   });
+
+  // ---- Scroll-linked parallax (hero fades/lifts as you scroll past it) ----
+  if (!prefersReducedMotion && scroll) {
+    const heroSection = document.getElementById('home');
+    const heroInnerEl = document.querySelector('.hero-inner');
+    const sceneWidgetEl = document.getElementById('sceneWidget');
+
+    if (heroSection && heroInnerEl) {
+      scroll(
+        animate(heroInnerEl, { opacity: [1, 1, 0], y: [0, 0, -60] }),
+        { target: heroSection, offset: ['start start', 'end start'] }
+      );
+    }
+    if (heroSection && sceneWidgetEl) {
+      scroll(
+        animate(sceneWidgetEl, { opacity: [1, 1, 0], y: [0, 0, -100], scale: [1, 1, 0.94] }),
+        { target: heroSection, offset: ['start start', 'end start'] }
+      );
+    }
+  }
+
 
   // ---- Spring hover / tap on safe interactive elements ----
   // (skips anything with its own continuous CSS animation, like tool-badges & work-boxes)
@@ -322,11 +402,13 @@ if (ambientBlobs && matchMedia('(hover: hover)').matches) {
 }
 
 // ---------- Theme toggle ----------
+const THEME_ORDER = ['navy', 'vivid', 'midnight'];
 const themeToggle = document.getElementById('themeToggle');
 if (themeToggle) {
   themeToggle.addEventListener('click', () => {
-    const current = document.documentElement.getAttribute('data-theme') || 'vivid';
-    const next = current === 'vivid' ? 'midnight' : 'vivid';
+    const current = document.documentElement.getAttribute('data-theme') || 'navy';
+    const idx = THEME_ORDER.indexOf(current);
+    const next = THEME_ORDER[(idx + 1) % THEME_ORDER.length];
     document.documentElement.setAttribute('data-theme', next);
     localStorage.setItem('sanz-theme', next);
   });
