@@ -122,6 +122,17 @@ if (!hasMotion) {
         { target: heroSection, offset: ['start start', 'end start'] }
       );
     }
+
+    // Extend parallax to floating icon layers in other sections (depth as you scroll through)
+    document.querySelectorAll('[data-float], .icon-rain').forEach((layer, i) => {
+      const parentSection = layer.closest('section');
+      if (!parentSection) return;
+      const direction = i % 2 === 0 ? 40 : -40;
+      scroll(
+        animate(layer, { y: [direction, -direction] }),
+        { target: parentSection, offset: ['start end', 'end start'] }
+      );
+    });
   }
 
 
@@ -342,24 +353,9 @@ document.querySelectorAll('.magnetic').forEach((btn) => {
   });
 });
 
-// ---------- Scroll parallax depth (floating layers drift at different speeds) ----------
-const parallaxLayers = document.querySelectorAll('[data-float], .icon-rain');
-let lastScrollY = window.scrollY;
-let ticking = false;
-function applyParallax() {
-  parallaxLayers.forEach((layer, i) => {
-    const speed = 0.06 + (i % 3) * 0.04;
-    layer.style.transform = `translateY(${lastScrollY * speed * -0.15}px)`;
-  });
-  ticking = false;
-}
-window.addEventListener('scroll', () => {
-  lastScrollY = window.scrollY;
-  if (!ticking) {
-    requestAnimationFrame(applyParallax);
-    ticking = true;
-  }
-}, { passive: true });
+// (Old plain-JS scroll parallax removed — replaced by Motion's scroll-linked
+// parallax above, which covers both the hero icon-rain and [data-float] layers
+// without fighting over the transform property.)
 
 // ---------- Hero scene widget (cycling work illustrations) ----------
 const sceneWidget = document.getElementById('sceneWidget');
@@ -402,11 +398,11 @@ if (ambientBlobs && matchMedia('(hover: hover)').matches) {
 }
 
 // ---------- Theme toggle ----------
-const THEME_ORDER = ['navy', 'vivid', 'midnight'];
+const THEME_ORDER = ['light', 'navy'];
 const themeToggle = document.getElementById('themeToggle');
 if (themeToggle) {
   themeToggle.addEventListener('click', () => {
-    const current = document.documentElement.getAttribute('data-theme') || 'navy';
+    const current = document.documentElement.getAttribute('data-theme') || 'light';
     const idx = THEME_ORDER.indexOf(current);
     const next = THEME_ORDER[(idx + 1) % THEME_ORDER.length];
     document.documentElement.setAttribute('data-theme', next);
