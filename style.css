@@ -5,23 +5,23 @@
 
 :root,
 html[data-theme="light"] {
-  --ink: #f7f9fc;
-  --ink-soft: #eef2f9;
+  --ink: #f9fafb;
+  --ink-soft: #f1f3f6;
   --card: #ffffff;
-  --paper: #16213a;
-  --muted: #64748b;
-  --lime: #0ea5e9;
-  --coral: #2563eb;
-  --accent-3: #0891b2;
-  --accent-4: #4f46e5;
+  --paper: #1a1a2e;
+  --muted: #6b7280;
+  --lime: #2563eb;
+  --coral: #c9a227;
+  --accent-3: #1d4ed8;
+  --accent-4: #b8860b;
   --grad: linear-gradient(135deg, var(--coral), var(--lime));
-  --grad4: linear-gradient(115deg, #2563eb, #0ea5e9, #0891b2, #4f46e5);
-  --border-rgb: 20, 30, 55;
+  --grad4: linear-gradient(115deg, #c9a227, #b8860b, #2563eb, #1d4ed8);
+  --border-rgb: 26, 26, 46;
   --glass-rgb: 255, 255, 255;
-  --glass-alpha: 0.55;
+  --glass-alpha: 0.65;
   --blob-blend: multiply;
-  --blob-opacity-mult: 0.5;
-  --grid-rgb: 20, 30, 55;
+  --blob-opacity-mult: 0.35;
+  --grid-rgb: 26, 26, 46;
 }
 
 html[data-theme="navy"] {
@@ -258,11 +258,11 @@ header {
 
 nav {
   display: flex;
-  gap: 26px;
+  gap: 21px;
   font-family: var(--font-mono);
-  font-size: 0.78rem;
+  font-size: 0.76rem;
   text-transform: uppercase;
-  letter-spacing: 0.04em;
+  letter-spacing: 0.03em;
 }
 
 nav a {
@@ -1762,6 +1762,67 @@ a.contact-item:hover {
   .fab { width: 48px; height: 48px; }
   .fab-label { display: none; }
 }
+
+.client-box { padding-top: 40px; }
+
+.client-logo {
+  display: block;
+  width: 64px;
+  height: 64px;
+  object-fit: contain;
+  margin: 0 auto 16px;
+  border-radius: 50%;
+  background: var(--card);
+  padding: 6px;
+  box-shadow: 0 6px 16px rgba(0,0,0,0.08);
+}
+
+.evervine-logo {
+  border-radius: 22%;
+  padding: 0;
+  background: transparent;
+}
+
+/* ---------- FAQ ---------- */
+.faq-list {
+  max-width: 820px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  position: relative;
+  z-index: 1;
+}
+
+.faq-item {
+  background: rgba(var(--glass-rgb), var(--glass-alpha));
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(var(--border-rgb), 0.1);
+  border-radius: 16px;
+  padding: 26px 30px;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.faq-item:hover {
+  border-color: var(--coral);
+  box-shadow: 0 16px 32px -18px rgba(201,162,39,0.25);
+}
+
+.faq-item h3 {
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  margin-bottom: 10px;
+  color: var(--paper);
+}
+
+.faq-item p {
+  color: var(--muted);
+  line-height: 1.65;
+  font-size: 0.96rem;
+}
+
+.faq-item p a { color: var(--lime); text-decoration: underline; }
 
 /* ---------- Footer ---------- */
 footer {
