@@ -1,10 +1,9 @@
 /* ============================================
-   SANZ CREATIVE — Kinetic Poster Design System
-   Theming: [data-theme="light"] (default, professional/glass) / "navy" (dark alt)
+   SANZ CREATIVE — Design System
+   Single theme: light, professional, gold + electric blue accents
    ============================================ */
 
-:root,
-html[data-theme="light"] {
+:root {
   --ink: #f9fafb;
   --ink-soft: #f1f3f6;
   --card: #ffffff;
@@ -22,66 +21,6 @@ html[data-theme="light"] {
   --blob-blend: multiply;
   --blob-opacity-mult: 0.35;
   --grid-rgb: 26, 26, 46;
-}
-
-html[data-theme="navy"] {
-  --ink: #0a1428;
-  --ink-soft: #0f1d38;
-  --card: #142544;
-  --paper: #eef4ff;
-  --muted: #7d95bd;
-  --lime: #00e5c7;
-  --coral: #3d8bff;
-  --accent-3: #00b8ff;
-  --accent-4: #7c5cff;
-  --grad: linear-gradient(135deg, var(--coral), var(--lime));
-  --grad4: linear-gradient(115deg, #3d8bff, #00b8ff, #00e5c7, #7c5cff);
-  --border-rgb: 244, 240, 230;
-  --glass-rgb: 20, 37, 68;
-  --glass-alpha: 0.45;
-  --blob-blend: screen;
-  --blob-opacity-mult: 1;
-  --grid-rgb: 244, 240, 230;
-}
-
-html[data-theme="vivid"] {
-  --ink: #170e2e;
-  --ink-soft: #22163f;
-  --card: #271a49;
-  --paper: #f5f1ff;
-  --muted: #ab9fd6;
-  --lime: #ff8a3d;
-  --coral: #ff2d78;
-  --accent-3: #8b3dff;
-  --accent-4: #3d7bff;
-  --grad: linear-gradient(135deg, var(--coral), var(--lime));
-  --grad4: linear-gradient(115deg, #ff2d78, #ff8a3d, #8b3dff, #3d7bff);
-  --border-rgb: 244, 240, 230;
-  --glass-rgb: 39, 26, 73;
-  --glass-alpha: 0.45;
-  --blob-blend: screen;
-  --blob-opacity-mult: 1;
-  --grid-rgb: 244, 240, 230;
-}
-
-html[data-theme="midnight"] {
-  --ink: #120f1b;
-  --ink-soft: #1c1728;
-  --card: #1e1a2c;
-  --paper: #f4f0e6;
-  --muted: #948da8;
-  --lime: #c6ff3d;
-  --coral: #ff4d6d;
-  --accent-3: #4d7cff;
-  --accent-4: #a855f7;
-  --grad: linear-gradient(135deg, var(--coral), var(--lime));
-  --grad4: linear-gradient(115deg, #ff4d6d, #ffb14d, #c6ff3d, #4d7cff);
-  --border-rgb: 244, 240, 230;
-  --glass-rgb: 30, 26, 44;
-  --glass-alpha: 0.45;
-  --blob-blend: screen;
-  --blob-opacity-mult: 1;
-  --grid-rgb: 244, 240, 230;
 }
 
 :root {
