@@ -1,11 +1,10 @@
 // ============================================================
 // SANZCREATIVE.AI — Premium interactions
-// Motion library loaded via CDN. Falls back gracefully if it fails.
 // ============================================================
 const hasMotion = typeof window.Motion !== 'undefined';
 const prefersReducedMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-// ---- HARD SAFETY NET: guarantees content is never permanently invisible ----
+// ---- HARD SAFETY NET ----
 setTimeout(() => {
   document.querySelectorAll('[data-in]').forEach((el) => {
     if (getComputedStyle(el).opacity === '0') {
@@ -21,7 +20,6 @@ if (!hasMotion) {
   const { animate, inView, stagger } = window.Motion;
   const EASE = [0.16, 1, 0.3, 1];
 
-  // ---- Hero entrance ----
   const heroEls = document.querySelectorAll('[data-hero]');
   if (heroEls.length) {
     animate(heroEls, { opacity: [0, 1], y: [26, 0] }, { duration: 0.7, delay: stagger(0.12, { startDelay: 0.1 }), ease: EASE });
@@ -31,7 +29,6 @@ if (!hasMotion) {
     animate(heroScene, { opacity: [0, 1], y: [40, 0], scale: [0.96, 1] }, { duration: 0.9, delay: 0.5, ease: EASE });
   }
 
-  // ---- Staggered scroll reveals, grouped by parent container ----
   const groups = new Map();
   document.querySelectorAll('[data-in]:not([data-hero])').forEach((el) => {
     const parent = el.parentElement;
@@ -40,12 +37,12 @@ if (!hasMotion) {
   });
   groups.forEach((items, container) => {
     inView(container, () => {
-      animate(items, { opacity: [0, 1], y: [24, 0] }, { duration: 0.6, delay: stagger(0.08), ease: EASE });
+      animate(items, { opacity: [0, 1], y: [24, 0] }, { duration: 0.6, delay: stagger(0.07), ease: EASE });
     }, { margin: '0px 0px -10% 0px' });
   });
 }
 
-// ---- Text-independent: cursor spotlight ----
+// ---- Cursor spotlight ----
 const spotlight = document.getElementById('spotlight');
 if (spotlight && matchMedia('(hover: hover)').matches) {
   document.addEventListener('mousemove', (e) => {
@@ -54,7 +51,7 @@ if (spotlight && matchMedia('(hover: hover)').matches) {
   });
 }
 
-// ---- Custom cursor dot + lagging ring ----
+// ---- Custom cursor ----
 const cursorDot = document.getElementById('cursorDot');
 const cursorRing = document.getElementById('cursorRing');
 if (cursorDot && cursorRing && matchMedia('(hover: hover)').matches) {
@@ -75,7 +72,7 @@ if (cursorDot && cursorRing && matchMedia('(hover: hover)').matches) {
   });
 }
 
-// ---- Aurora field: subtle mouse-reactive parallax (own layer, no conflicts) ----
+// ---- Aurora field parallax ----
 const auroraField = document.getElementById('auroraField');
 if (auroraField && matchMedia('(hover: hover)').matches) {
   document.addEventListener('mousemove', (e) => {
@@ -101,9 +98,9 @@ document.querySelectorAll('.magnetic').forEach((btn) => {
   });
 });
 
-// ---- 3D tilt on cards (no continuous CSS transform animations on these, safe) ----
+// ---- 3D tilt (elements with no competing continuous CSS transform) ----
 if (matchMedia('(hover: hover)').matches && !prefersReducedMotion) {
-  const tiltSelector = '.work-visual, .behind-card, .bento-item, .price-card, .faq-item, .stat-card, .hero-scene-frame';
+  const tiltSelector = '.work-visual, .behind-card, .price-card, .faq-item, .stat-card, .hero-scene-frame, .client-card, .portfolio-card, .skill-chip';
   document.querySelectorAll(tiltSelector).forEach((el) => {
     el.style.transformStyle = 'preserve-3d';
     let rafId = null;
@@ -113,7 +110,7 @@ if (matchMedia('(hover: hover)').matches && !prefersReducedMotion) {
         const rect = el.getBoundingClientRect();
         const px = (e.clientX - rect.left) / rect.width - 0.5;
         const py = (e.clientY - rect.top) / rect.height - 0.5;
-        el.style.transform = `perspective(900px) rotateX(${(py * -8).toFixed(2)}deg) rotateY(${(px * 9).toFixed(2)}deg)`;
+        el.style.transform = `perspective(900px) rotateX(${(py * -7).toFixed(2)}deg) rotateY(${(px * 8).toFixed(2)}deg)`;
         rafId = null;
       });
     });
@@ -123,12 +120,43 @@ if (matchMedia('(hover: hover)').matches && !prefersReducedMotion) {
   });
 }
 
-// ---- Mobile nav toggle ----
+// ---- Mobile nav ----
 const navToggle = document.getElementById('navToggle');
 const navMenu = document.getElementById('navMenu');
 if (navToggle && navMenu) {
   navToggle.addEventListener('click', () => navMenu.classList.toggle('open'));
   navMenu.querySelectorAll('a').forEach((link) => link.addEventListener('click', () => navMenu.classList.remove('open')));
+}
+
+// ---- Portfolio filter ----
+const filterTabs = document.getElementById('filterTabs');
+const portfolioGrid = document.getElementById('portfolioGrid');
+if (filterTabs && portfolioGrid) {
+  const cards = portfolioGrid.querySelectorAll('.portfolio-card');
+  filterTabs.querySelectorAll('.filter-tab').forEach((tab) => {
+    tab.addEventListener('click', () => {
+      filterTabs.querySelectorAll('.filter-tab').forEach((t) => t.classList.remove('active'));
+      tab.classList.add('active');
+      const filter = tab.dataset.filter;
+      cards.forEach((card) => {
+        const cats = (card.dataset.category || '').split(' ');
+        const show = filter === 'all' || cats.includes(filter);
+        if (hasMotion && !prefersReducedMotion) {
+          const { animate } = window.Motion;
+          if (show) {
+            card.classList.remove('hidden-filter');
+            animate(card, { opacity: [0, 1], y: [12, 0] }, { duration: 0.4, ease: [0.16, 1, 0.3, 1] });
+          } else {
+            animate(card, { opacity: [1, 0] }, { duration: 0.2 }).finished.then(() => {
+              card.classList.add('hidden-filter');
+            });
+          }
+        } else {
+          card.classList.toggle('hidden-filter', !show);
+        }
+      });
+    });
+  });
 }
 
 // ---- Animated counters ----
@@ -168,9 +196,8 @@ if (processTimeline && processFill) {
     const visible = Math.min(Math.max(viewportH * 0.65 - rect.top, 0), total);
     const pct = Math.min((visible / total) * 100, 100);
     processFill.style.height = pct + '%';
-    processSteps.forEach((step, i) => {
-      const stepTop = step.offsetTop;
-      step.classList.toggle('active', (visible) >= stepTop);
+    processSteps.forEach((step) => {
+      step.classList.toggle('active', visible >= step.offsetTop);
     });
   }
   window.addEventListener('scroll', updateProcessFill, { passive: true });
@@ -185,7 +212,6 @@ if (leadForm) {
   leadForm.addEventListener('submit', async (e) => {
     e.preventDefault();
     if (leadForm._gotcha && leadForm._gotcha.checked) return;
-
     const endpoint = leadForm.action;
     const submitBtn = leadForm.querySelector('.form-submit');
     const submitLabel = submitBtn.querySelector('span');
@@ -194,13 +220,8 @@ if (leadForm) {
     submitLabel.textContent = 'Sending...';
     formStatus.textContent = '';
     formStatus.className = 'form-status';
-
     try {
-      const res = await fetch(endpoint, {
-        method: 'POST',
-        headers: { Accept: 'application/json' },
-        body: new FormData(leadForm),
-      });
+      const res = await fetch(endpoint, { method: 'POST', headers: { Accept: 'application/json' }, body: new FormData(leadForm) });
       if (res.ok) {
         formStatus.textContent = "Thanks — we'll get back to you the same day.";
         formStatus.className = 'form-status success';
