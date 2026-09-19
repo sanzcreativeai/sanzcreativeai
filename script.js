@@ -1,5 +1,8 @@
 // ============================================================
-// SANZCREATIVE.AI — Premium interactions
+// SANZCREATIVE.AI — Interactions
+// Hero visibility is pure CSS now (see style.css) — this script only
+// handles below-the-fold reveals and interactive features, so a slow
+// or blocked CDN can never delay what the visitor sees first.
 // ============================================================
 const hasMotion = typeof window.Motion !== 'undefined';
 const prefersReducedMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -19,18 +22,8 @@ if (!hasMotion) {
 } else {
   const { animate, inView, stagger } = window.Motion;
   const EASE = [0.16, 1, 0.3, 1];
-
-  const heroEls = document.querySelectorAll('[data-hero]');
-  if (heroEls.length) {
-    animate(heroEls, { opacity: [0, 1], y: [26, 0] }, { duration: 0.7, delay: stagger(0.12, { startDelay: 0.1 }), ease: EASE });
-  }
-  const heroScene = document.querySelector('[data-hero-scene]');
-  if (heroScene) {
-    animate(heroScene, { opacity: [0, 1], y: [40, 0], scale: [0.96, 1] }, { duration: 0.9, delay: 0.5, ease: EASE });
-  }
-
   const groups = new Map();
-  document.querySelectorAll('[data-in]:not([data-hero])').forEach((el) => {
+  document.querySelectorAll('[data-in]').forEach((el) => {
     const parent = el.parentElement;
     if (!groups.has(parent)) groups.set(parent, []);
     groups.get(parent).push(el);
@@ -72,16 +65,6 @@ if (cursorDot && cursorRing && matchMedia('(hover: hover)').matches) {
   });
 }
 
-// ---- Aurora field parallax ----
-const auroraField = document.getElementById('auroraField');
-if (auroraField && matchMedia('(hover: hover)').matches) {
-  document.addEventListener('mousemove', (e) => {
-    const nx = (e.clientX / window.innerWidth - 0.5) * 2;
-    const ny = (e.clientY / window.innerHeight - 0.5) * 2;
-    auroraField.style.transform = `translate(${nx * -24}px, ${ny * -20}px)`;
-  });
-}
-
 // ---- Magnetic buttons ----
 document.querySelectorAll('.magnetic').forEach((btn) => {
   const label = btn.querySelector('span');
@@ -98,9 +81,9 @@ document.querySelectorAll('.magnetic').forEach((btn) => {
   });
 });
 
-// ---- 3D tilt (elements with no competing continuous CSS transform) ----
+// ---- 3D tilt ----
 if (matchMedia('(hover: hover)').matches && !prefersReducedMotion) {
-  const tiltSelector = '.work-visual, .behind-card, .price-card, .faq-item, .stat-card, .hero-scene-frame, .client-card, .portfolio-card, .skill-chip';
+  const tiltSelector = '.work-visual, .behind-card, .price-card, .faq-item, .stat-card, .client-card, .portfolio-card, .skill-chip';
   document.querySelectorAll(tiltSelector).forEach((el) => {
     el.style.transformStyle = 'preserve-3d';
     let rafId = null;
@@ -110,7 +93,7 @@ if (matchMedia('(hover: hover)').matches && !prefersReducedMotion) {
         const rect = el.getBoundingClientRect();
         const px = (e.clientX - rect.left) / rect.width - 0.5;
         const py = (e.clientY - rect.top) / rect.height - 0.5;
-        el.style.transform = `perspective(900px) rotateX(${(py * -7).toFixed(2)}deg) rotateY(${(px * 8).toFixed(2)}deg)`;
+        el.style.transform = `perspective(900px) rotateX(${(py * -6).toFixed(2)}deg) rotateY(${(px * 7).toFixed(2)}deg)`;
         rafId = null;
       });
     });
@@ -127,6 +110,37 @@ if (navToggle && navMenu) {
   navToggle.addEventListener('click', () => navMenu.classList.toggle('open'));
   navMenu.querySelectorAll('a').forEach((link) => link.addEventListener('click', () => navMenu.classList.remove('open')));
 }
+
+// ---- Scroll-spy navigation ----
+const navLinks = document.querySelectorAll('nav a[href^="#"]');
+const spySections = Array.from(navLinks).map((link) => document.querySelector(link.getAttribute('href'))).filter(Boolean);
+if (navLinks.length && spySections.length) {
+  const spyIO = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        const id = '#' + entry.target.id;
+        navLinks.forEach((link) => link.classList.toggle('nav-active', link.getAttribute('href') === id));
+      }
+    });
+  }, { rootMargin: '-40% 0px -50% 0px', threshold: 0 });
+  spySections.forEach((section) => spyIO.observe(section));
+}
+
+// ---- Copy-to-clipboard on contact links ----
+document.querySelectorAll('.contact-links a').forEach((link) => {
+  const isEmail = link.href.startsWith('mailto:');
+  if (!isEmail) return;
+  link.addEventListener('click', (e) => {
+    e.preventDefault();
+    const value = link.href.replace('mailto:', '');
+    navigator.clipboard.writeText(value).then(() => {
+      const original = link.textContent;
+      link.textContent = 'Copied!';
+      link.classList.add('copied');
+      setTimeout(() => { link.textContent = original; link.classList.remove('copied'); }, 1600);
+    }).catch(() => { window.location.href = link.href; });
+  });
+});
 
 // ---- Portfolio filter ----
 const filterTabs = document.getElementById('filterTabs');
