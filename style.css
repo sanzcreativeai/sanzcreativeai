@@ -263,8 +263,8 @@ nav a:hover::after, nav a.nav-active::after { width: 100%; }
 .client-card { padding: 26px 22px; }
 .client-logo-wrap { height: 44px; display: flex; align-items: center; margin-bottom: 14px; }
 .client-logo-wrap img { max-height: 44px; max-width: 120px; object-fit: contain; }
-.client-icon { width: 40px; height: 40px; border-radius: 8px; display: flex; align-items: center; justify-content: center; background: var(--emerald); color: #fff; margin-bottom: 14px; }
-.client-icon svg { width: 20px; height: 20px; }
+.client-icon { width: 40px; height: 40px; border-radius: 8px; display: flex; align-items: center; justify-content: center; background: var(--emerald); color: #fff; margin-bottom: 14px; overflow: hidden; flex-shrink: 0; }
+.client-icon svg { width: 20px; height: 20px; flex-shrink: 0; }
 .client-card h4 { font-family: var(--font-display); font-size: 1rem; font-weight: 700; margin-bottom: 4px; }
 .client-card .client-industry { font-family: var(--font-mono); font-size: 0.66rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--terracotta); margin-bottom: 10px; display: block; font-weight: 700; }
 .client-card p { color: var(--text-2); font-size: 0.83rem; line-height: 1.55; }
@@ -305,8 +305,8 @@ nav a:hover::after, nav a.nav-active::after { width: 100%; }
 /* ---------- Services (bento with descriptions, not just chips) ---------- */
 .services-grid { margin-top: 60px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
 .service-card { padding: 28px; }
-.service-icon-wrap { width: 44px; height: 44px; border-radius: 10px; background: var(--bg-soft); display: flex; align-items: center; justify-content: center; margin-bottom: 16px; color: var(--emerald); }
-.service-icon-wrap svg { width: 22px; height: 22px; }
+.service-icon-wrap { width: 44px; height: 44px; border-radius: 10px; background: var(--bg-soft); display: flex; align-items: center; justify-content: center; margin-bottom: 16px; color: var(--emerald); overflow: hidden; flex-shrink: 0; }
+.service-icon-wrap svg { width: 22px; height: 22px; flex-shrink: 0; }
 .service-card h3 { font-family: var(--font-display); font-size: 1.1rem; font-weight: 700; margin-bottom: 6px; }
 .service-card p { color: var(--text-2); font-size: 0.9rem; line-height: 1.55; }
 @media (max-width: 900px) { .services-grid { grid-template-columns: repeat(2, 1fr); } }
