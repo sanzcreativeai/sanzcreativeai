@@ -1,115 +1,32 @@
 // ============================================================
-// SANZCREATIVE.AI — Interactions
-// Hero visibility is pure CSS now (see style.css) — this script only
-// handles below-the-fold reveals and interactive features, so a slow
-// or blocked CDN can never delay what the visitor sees first.
+// SANZCREATIVE.AI — Clean, lightweight interactions
+// NO external animation library. NO cursor tracking. NO lag.
+// Just clean scroll reveals, portfolio filter, counters, and form.
 // ============================================================
-const hasMotion = typeof window.Motion !== 'undefined';
-const prefersReducedMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-// ---- HARD SAFETY NET ----
+// ---- Hard safety net: all [data-in] visible within 2.5s no matter what ----
 setTimeout(() => {
   document.querySelectorAll('[data-in]').forEach((el) => {
-    if (getComputedStyle(el).opacity === '0') {
-      el.style.opacity = '1';
-      el.style.transform = 'none';
-    }
+    el.classList.add('revealed');
   });
 }, 2500);
 
-if (!hasMotion) {
-  document.querySelectorAll('[data-in]').forEach((el) => { el.style.opacity = '1'; });
-} else {
-  const { animate, inView, stagger } = window.Motion;
-  const EASE = [0.16, 1, 0.3, 1];
-  const groups = new Map();
-  document.querySelectorAll('[data-in]').forEach((el) => {
-    const parent = el.parentElement;
-    if (!groups.has(parent)) groups.set(parent, []);
-    groups.get(parent).push(el);
-  });
-  groups.forEach((items, container) => {
-    inView(container, () => {
-      animate(items, { opacity: [0, 1], y: [24, 0] }, { duration: 0.6, delay: stagger(0.07), ease: EASE });
-    }, { margin: '0px 0px -10% 0px' });
-  });
-}
-
-// ---- Cursor spotlight ----
-const spotlight = document.getElementById('spotlight');
-if (spotlight && matchMedia('(hover: hover)').matches) {
-  document.addEventListener('mousemove', (e) => {
-    spotlight.style.setProperty('--x', (e.clientX / window.innerWidth) * 100 + '%');
-    spotlight.style.setProperty('--y', (e.clientY / window.innerHeight) * 100 + '%');
-  });
-}
-
-// ---- Custom cursor ----
-const cursorDot = document.getElementById('cursorDot');
-const cursorRing = document.getElementById('cursorRing');
-if (cursorDot && cursorRing && matchMedia('(hover: hover)').matches) {
-  let mx = 0, my = 0, rx = 0, ry = 0;
-  document.addEventListener('mousemove', (e) => {
-    mx = e.clientX; my = e.clientY;
-    cursorDot.style.transform = `translate(${mx}px, ${my}px) translate(-50%,-50%)`;
-  });
-  (function loop() {
-    rx += (mx - rx) * 0.15;
-    ry += (my - ry) * 0.15;
-    cursorRing.style.transform = `translate(${rx}px, ${ry}px) translate(-50%,-50%)`;
-    requestAnimationFrame(loop);
-  })();
-  document.querySelectorAll('a, button, .glass').forEach((el) => {
-    el.addEventListener('mouseenter', () => cursorRing.classList.add('hovering'));
-    el.addEventListener('mouseleave', () => cursorRing.classList.remove('hovering'));
-  });
-}
-
-// ---- Magnetic buttons ----
-document.querySelectorAll('.magnetic').forEach((btn) => {
-  const label = btn.querySelector('span');
-  btn.addEventListener('mousemove', (e) => {
-    const rect = btn.getBoundingClientRect();
-    const x = e.clientX - rect.left - rect.width / 2;
-    const y = e.clientY - rect.top - rect.height / 2;
-    btn.style.transform = `translate(${x * 0.18}px, ${y * 0.35}px)`;
-    if (label) label.style.transform = `translate(${x * 0.1}px, ${y * 0.2}px)`;
-  });
-  btn.addEventListener('mouseleave', () => {
-    btn.style.transform = '';
-    if (label) label.style.transform = '';
-  });
-});
-
-// ---- 3D tilt ----
-if (matchMedia('(hover: hover)').matches && !prefersReducedMotion) {
-  const tiltSelector = '.work-visual, .behind-card, .price-card, .faq-item, .stat-card, .client-card, .portfolio-card, .skill-chip';
-  document.querySelectorAll(tiltSelector).forEach((el) => {
-    el.style.transformStyle = 'preserve-3d';
-    let rafId = null;
-    el.addEventListener('mousemove', (e) => {
-      if (rafId) return;
-      rafId = requestAnimationFrame(() => {
-        const rect = el.getBoundingClientRect();
-        const px = (e.clientX - rect.left) / rect.width - 0.5;
-        const py = (e.clientY - rect.top) / rect.height - 0.5;
-        el.style.transform = `perspective(900px) rotateX(${(py * -6).toFixed(2)}deg) rotateY(${(px * 7).toFixed(2)}deg)`;
-        rafId = null;
+// ---- Scroll-triggered reveals via IntersectionObserver ----
+const revealIO = new IntersectionObserver((entries) => {
+  entries.forEach((entry) => {
+    if (entry.isIntersecting) {
+      // Stagger children that share a parent
+      const parent = entry.target.parentElement;
+      const siblings = parent.querySelectorAll('[data-in]');
+      siblings.forEach((el, i) => {
+        setTimeout(() => el.classList.add('revealed'), i * 60);
       });
-    });
-    el.addEventListener('mouseleave', () => {
-      el.style.transform = 'perspective(900px) rotateX(0deg) rotateY(0deg)';
-    });
+      revealIO.unobserve(entry.target);
+    }
   });
-}
+}, { rootMargin: '0px 0px -8% 0px', threshold: 0.1 });
 
-// ---- Mobile nav ----
-const navToggle = document.getElementById('navToggle');
-const navMenu = document.getElementById('navMenu');
-if (navToggle && navMenu) {
-  navToggle.addEventListener('click', () => navMenu.classList.toggle('open'));
-  navMenu.querySelectorAll('a').forEach((link) => link.addEventListener('click', () => navMenu.classList.remove('open')));
-}
+document.querySelectorAll('[data-in]').forEach((el) => revealIO.observe(el));
 
 // ---- Scroll-spy navigation ----
 const navLinks = document.querySelectorAll('nav a[href^="#"]');
@@ -126,21 +43,13 @@ if (navLinks.length && spySections.length) {
   spySections.forEach((section) => spyIO.observe(section));
 }
 
-// ---- Copy-to-clipboard on contact links ----
-document.querySelectorAll('.contact-links a').forEach((link) => {
-  const isEmail = link.href.startsWith('mailto:');
-  if (!isEmail) return;
-  link.addEventListener('click', (e) => {
-    e.preventDefault();
-    const value = link.href.replace('mailto:', '');
-    navigator.clipboard.writeText(value).then(() => {
-      const original = link.textContent;
-      link.textContent = 'Copied!';
-      link.classList.add('copied');
-      setTimeout(() => { link.textContent = original; link.classList.remove('copied'); }, 1600);
-    }).catch(() => { window.location.href = link.href; });
-  });
-});
+// ---- Mobile nav ----
+const navToggle = document.getElementById('navToggle');
+const navMenu = document.getElementById('navMenu');
+if (navToggle && navMenu) {
+  navToggle.addEventListener('click', () => navMenu.classList.toggle('open'));
+  navMenu.querySelectorAll('a').forEach((link) => link.addEventListener('click', () => navMenu.classList.remove('open')));
+}
 
 // ---- Portfolio filter ----
 const filterTabs = document.getElementById('filterTabs');
@@ -155,19 +64,7 @@ if (filterTabs && portfolioGrid) {
       cards.forEach((card) => {
         const cats = (card.dataset.category || '').split(' ');
         const show = filter === 'all' || cats.includes(filter);
-        if (hasMotion && !prefersReducedMotion) {
-          const { animate } = window.Motion;
-          if (show) {
-            card.classList.remove('hidden-filter');
-            animate(card, { opacity: [0, 1], y: [12, 0] }, { duration: 0.4, ease: [0.16, 1, 0.3, 1] });
-          } else {
-            animate(card, { opacity: [1, 0] }, { duration: 0.2 }).finished.then(() => {
-              card.classList.add('hidden-filter');
-            });
-          }
-        } else {
-          card.classList.toggle('hidden-filter', !show);
-        }
+        card.classList.toggle('hidden-filter', !show);
       });
     });
   });
@@ -182,7 +79,7 @@ const counterIO = new IntersectionObserver((entries) => {
     const target = parseInt(el.dataset.target, 10);
     const divide = parseInt(el.dataset.divide || '1', 10);
     const suffix = el.dataset.suffix || '';
-    const duration = 1600;
+    const duration = 1400;
     const start = performance.now();
     function tick(now) {
       const progress = Math.min((now - start) / duration, 1);
@@ -215,9 +112,22 @@ if (processTimeline && processFill) {
     });
   }
   window.addEventListener('scroll', updateProcessFill, { passive: true });
-  window.addEventListener('resize', updateProcessFill);
   updateProcessFill();
 }
+
+// ---- Copy-to-clipboard on email ----
+document.querySelectorAll('.contact-links a[href^="mailto:"]').forEach((link) => {
+  link.addEventListener('click', (e) => {
+    e.preventDefault();
+    const value = link.href.replace('mailto:', '');
+    navigator.clipboard.writeText(value).then(() => {
+      const original = link.textContent;
+      link.textContent = '✓ Copied!';
+      link.classList.add('copied');
+      setTimeout(() => { link.textContent = original; link.classList.remove('copied'); }, 1600);
+    }).catch(() => { window.location.href = link.href; });
+  });
+});
 
 // ---- Lead form (Formspree) ----
 const leadForm = document.getElementById('leadForm');
@@ -237,7 +147,7 @@ if (leadForm) {
     try {
       const res = await fetch(endpoint, { method: 'POST', headers: { Accept: 'application/json' }, body: new FormData(leadForm) });
       if (res.ok) {
-        formStatus.textContent = "Thanks — we'll get back to you the same day.";
+        formStatus.textContent = "✓ Thanks — we'll get back to you the same day.";
         formStatus.className = 'form-status success';
         leadForm.reset();
       } else {
